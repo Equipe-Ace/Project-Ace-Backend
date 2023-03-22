@@ -10,6 +10,7 @@ public class Api3DsmApplication{
 	
 	
 	public static void main(String[] args) {
+		// inicio da feat-aderirservioco
 		// SpringApplication.run(Api3DsmApplication.class, args);
 		Map<String, Object> configuracao = new HashMap<>();
 		
