@@ -1,5 +1,6 @@
 package com.api3Dsm.domain.controle;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -16,8 +17,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import com.api3Dsm.domain.modelo.Servico;
 import com.api3Dsm.domain.modelo.Usuario;
 import com.api3Dsm.domain.repositorio.UsuarioRepositorio;
+import com.api3Dsm.domain.servico.GeradorParcela;
+
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -27,10 +31,17 @@ public class UsuarioControle {
 
 	@Autowired
 	private UsuarioRepositorio usuarioRepositorio;
+	
+	@Autowired
+	private GeradorParcela gerador;
 
-	@PostMapping("inserir")
+	@PostMapping("/inserir")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void CadastrarUsuario(@Valid @RequestBody Usuario usuario) {
+		List<Servico> servicos = new ArrayList<>();
+		servicos.addAll(usuario.getServicos());
+		Servico servico = servicos.get(0);
+		gerador.gerarParcelas(servico);
 		usuarioRepositorio.save(usuario);
 	}
 
@@ -62,6 +73,30 @@ public class UsuarioControle {
 		}
 		usuarioRepositorio.deleteById(id);
 		return ResponseEntity.noContent().build();
+	}
+
+
+	@GetMapping("/pegarNome/{nome}")
+	public Usuario pegarClienteNome(@PathVariable String nome){
+		List<Usuario> listaUsuarios = usuarioRepositorio.findAll();
+		Usuario usuarioBuscado = null;
+		for(Usuario usuario: listaUsuarios){
+			if(usuario.getNome().equals(nome)){
+				usuarioBuscado = usuario;
+				break;
+			}
+		}
+		return usuarioBuscado;
+	}
+
+
+	@PutMapping("/atualizarParcela")
+	public Usuario atualizarParcelas(@RequestBody Usuario usuario){
+		Usuario usuarioAntigo = usuarioRepositorio.getReferenceById(usuario.getId());
+		Usuario usuarioNovo = usuario;
+        usuarioAntigo = usuarioNovo;
+		usuarioRepositorio.saveAndFlush(usuarioAntigo);
+		return usuarioAntigo;
 	}
 
 }

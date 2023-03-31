@@ -1,9 +1,14 @@
 package com.api3Dsm.domain.modelo;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import lombok.EqualsAndHashCode;
@@ -25,10 +30,12 @@ public class Usuario {
 	
 	@Column
 	private String cpf;
-	
 
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private Endereco endereco;
+	
+	@OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<Servico> servicos = new HashSet<>();
 	
 	public Long getId() {
 		return id;
@@ -59,5 +66,11 @@ public class Usuario {
 	}
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
+	}
+	public Set<Servico> getServicos() {
+		return servicos;
+	}
+	public void setServicos(Set<Servico> servicos) {
+		this.servicos = servicos;
 	}
 }
