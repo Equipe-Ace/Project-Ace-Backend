@@ -2,9 +2,7 @@ package com.api3Dsm.domain.controle;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,86 +15,85 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import com.api3Dsm.domain.modelo.Cliente;
 import com.api3Dsm.domain.modelo.Servico;
-import com.api3Dsm.domain.modelo.Usuario;
-import com.api3Dsm.domain.repositorio.UsuarioRepositorio;
+import com.api3Dsm.domain.repositorio.ClienteRepositorio;
 import com.api3Dsm.domain.servico.GeradorParcela;
-
 import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("Cliente")
-public class UsuarioControle {
+public class ClienteControle {
 
 	@Autowired
-	private UsuarioRepositorio usuarioRepositorio;
+	private ClienteRepositorio clienteRepositorio;
 	
 	@Autowired
 	private GeradorParcela gerador;
 
 	@PostMapping("/inserir")
 	@ResponseStatus(HttpStatus.CREATED)
-	public void CadastrarUsuario(@Valid @RequestBody Usuario usuario) {
+	public void CadastrarUsuario(@Valid @RequestBody Cliente usuario) {
 		List<Servico> servicos = new ArrayList<>();
 		servicos.addAll(usuario.getServicos());
 		Servico servico = servicos.get(0);
 		gerador.gerarParcelas(servico);
-		usuarioRepositorio.save(usuario);
+		clienteRepositorio.save(usuario);
 	}
 
 	@GetMapping
-	public List<Usuario> Listar() {
-		return usuarioRepositorio.findAll();
+	public List<Cliente> Listar() {
+		return clienteRepositorio.findAll();
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Usuario> buscar(@PathVariable Long id) {
-		return usuarioRepositorio.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+	public ResponseEntity<Cliente> buscar(@PathVariable Long id) {
+		return clienteRepositorio.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
 	}
 
 	@PutMapping("/atualizar/")
-	public ResponseEntity<Usuario> Atualizar(@Valid @RequestBody Usuario usuario) {
-		if (!usuarioRepositorio.existsById(usuario.getId())) {
+	public ResponseEntity<Cliente> Atualizar(@Valid @RequestBody Cliente cliente) {
+		if (!clienteRepositorio.existsById(cliente.getId())) {
 			return ResponseEntity.notFound().build();
 		}else {
-			usuarioRepositorio.save(usuario);
-			return ResponseEntity.ok(usuario);
+			clienteRepositorio.save(cliente);
+			return ResponseEntity.ok(cliente);
 		}
 		
 	}
 
 	@DeleteMapping("/deletar/{id}")
 	public ResponseEntity<Void> Deletar(@PathVariable Long id) {
-		if (!usuarioRepositorio.existsById(id)) {
+		if (!clienteRepositorio.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		usuarioRepositorio.deleteById(id);
+		clienteRepositorio.deleteById(id);
 		return ResponseEntity.noContent().build();
 	}
 
 
 	@GetMapping("/pegarNome/{nome}")
-	public Usuario pegarClienteNome(@PathVariable String nome){
-		List<Usuario> listaUsuarios = usuarioRepositorio.findAll();
-		Usuario usuarioBuscado = null;
-		for(Usuario usuario: listaUsuarios){
-			if(usuario.getNome().equals(nome)){
-				usuarioBuscado = usuario;
+	public Cliente pegarClienteNome(@PathVariable String nome){
+		List<Cliente> listaClientes = clienteRepositorio.findAll();
+		Cliente clienteBuscado = null;
+		for(Cliente cliente: listaClientes){
+			if(cliente.getNome().equals(nome)){
+				clienteBuscado = cliente;
 				break;
 			}
 		}
-		return usuarioBuscado;
+		return clienteBuscado;
 	}
 
 
 	@PutMapping("/atualizarParcela")
-	public Usuario atualizarParcelas(@RequestBody Usuario usuario){
-		Usuario usuarioAntigo = usuarioRepositorio.getReferenceById(usuario.getId());
-		Usuario usuarioNovo = usuario;
-        usuarioAntigo = usuarioNovo;
-		usuarioRepositorio.saveAndFlush(usuarioAntigo);
-		return usuarioAntigo;
+	public Cliente atualizarParcelas(@RequestBody Cliente cliente){
+		Cliente clienteAntigo = clienteRepositorio.getReferenceById(cliente.getId());
+		Cliente clienteNovo = cliente;
+        clienteAntigo = clienteNovo;
+		clienteRepositorio.saveAndFlush(clienteAntigo);
+		return clienteAntigo;
 	}
 
 }
