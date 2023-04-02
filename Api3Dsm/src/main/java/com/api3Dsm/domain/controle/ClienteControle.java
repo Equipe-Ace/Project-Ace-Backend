@@ -1,5 +1,6 @@
 package com.api3Dsm.domain.controle;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -59,23 +60,44 @@ public class ClienteControle {
 		float precoDoServico = cliente.getServico().getPreco();
         float precoCadaParcela = precoDoServico / 12;
         List<Parcela> listaParcelas = new ArrayList<>();
-
+		LocalDate dataVenci = LocalDate.now();
+		
 
         for(int i = 0; i <12; i++){
             Parcela parcela = new Parcela();
 		
             parcela.setValorParcela(precoCadaParcela);
             parcela.setNumeroParcela((i +1));
-			parcela.setDataVencimento("30/04/2023");
-			
+			//parcela.setDataVencimento("30/04/2023");
+			if(i == 0){
+				parcela.setDataVencimento(dataVenci.plusDays(30));
+			}
+
             listaParcelas.add(parcela);
             cliente.getServico().setParcelas(listaParcelas);
         }
         clienteRepositorio.save(cliente);
 		Long idCliente = cliente.getId();
 		List<Parcela> parcelasDoCliente = cliente.getServico().getParcelas();
+		int contador = 0;
+		int multiplicadorData = 0;
+		LocalDate alterarDataVen = LocalDate.now();
 		for(Parcela parcela: parcelasDoCliente){
+			
+			if(contador == 0){
+				alterarDataVen = parcela.getDataVencimento();
+			}
 			parcela.setIdCliente(idCliente);
+			
+			if(contador != 0){
+				
+				LocalDate dataVencimentoAlterada = alterarDataVen.plusDays(30 * multiplicadorData);
+				parcela.setDataVencimento(dataVencimentoAlterada);
+				multiplicadorData += 1;
+			}else{
+				contador += 1;
+				multiplicadorData = 1;
+			}
 		}
 		clienteRepositorio.save(cliente);
 

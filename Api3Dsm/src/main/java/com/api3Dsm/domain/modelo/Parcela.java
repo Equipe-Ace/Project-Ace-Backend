@@ -1,6 +1,8 @@
 package com.api3Dsm.domain.modelo;
 
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -24,7 +26,7 @@ public class Parcela {
 	private int numeroParcela;
 	
 	@Column
-	private String dataVencimento;
+	private LocalDate dataVencimento;
 	
 	@Column
 	private String dataPagamento;
@@ -64,11 +66,11 @@ public class Parcela {
 	}
 
 
-	public String getDataVencimento() {
+	public LocalDate getDataVencimento() {
 		return dataVencimento;
 	}
 
-	public void setDataVencimento(String  dataVencimento) {
+	public void setDataVencimento(LocalDate  dataVencimento) {
 		this.dataVencimento = dataVencimento;
 	}
 
