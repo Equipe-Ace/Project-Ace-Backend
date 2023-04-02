@@ -13,6 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.api3Dsm.domain.modelo.Usuario;
 import com.api3Dsm.domain.repositorio.UsuarioRepositorio;
 
+/* 
 @SpringBootApplication
 public class Api3DsmApplication implements CommandLineRunner{
 	
@@ -54,4 +55,27 @@ public class Api3DsmApplication implements CommandLineRunner{
 			}
 		};
 	}
+}
+
+*/
+
+@SpringBootApplication
+public class Api3DsmApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(Api3DsmApplication.class, args);
+	}
+
+
+	@Bean
+	public WebMvcConfigurer corsConfigurer()
+	{
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/**").allowedMethods("GET", "POST","PUT", "DELETE").allowedOrigins("http://localhost:3000");
+			}
+		};
+	}
+
 }

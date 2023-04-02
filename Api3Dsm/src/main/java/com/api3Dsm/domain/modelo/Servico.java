@@ -1,6 +1,8 @@
 package com.api3Dsm.domain.modelo;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -8,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import lombok.EqualsAndHashCode;
@@ -24,11 +27,10 @@ public class Servico {
 	private Long id;
 	
 	@Column
-	private Float Preco;
-	
+	private Float preco;
 	
 	@OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Set<Parcela> parcelas = new HashSet<>();
+	private List<Parcela> parcelas = new ArrayList<>();
 	
 
 	public Long getId() {
@@ -40,18 +42,18 @@ public class Servico {
 	}
 
 	public Float getPreco() {
-		return Preco;
+		return preco;
 	}
 
 	public void setPreco(Float preco) {
-		Preco = preco;
+		this.preco = preco;
 	}
 
-	public Set<Parcela> getParcelas() {
+	public List<Parcela> getParcelas() {
 		return parcelas;
 	}
 
-	public void setParcelas(Set<Parcela> parcelas) {
+	public void setParcelas(List<Parcela> parcelas) {
 		this.parcelas = parcelas;
 	}
 

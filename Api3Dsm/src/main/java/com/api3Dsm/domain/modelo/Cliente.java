@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -34,8 +35,8 @@ public class Cliente {
 	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	private Endereco endereco;
 	
-	@OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Set<Servico> servicos = new HashSet<>();
+	@OneToOne(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Servico servico;
 	
 	public Long getId() {
 		return id;
@@ -67,10 +68,10 @@ public class Cliente {
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
-	public Set<Servico> getServicos() {
-		return servicos;
+	public Servico getServico() {
+		return servico;
 	}
-	public void setServicos(Set<Servico> servicos) {
-		this.servicos = servicos;
+	public void setServico(Servico servico) {
+		this.servico = servico;
 	}
 }

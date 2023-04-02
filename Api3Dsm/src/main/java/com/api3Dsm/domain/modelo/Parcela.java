@@ -16,6 +16,12 @@ public class Parcela {
 	@GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY)
 	@EqualsAndHashCode.Include
 	private Long id;
+
+	@Column
+	private Long idCliente;
+
+	@Column
+	private int numeroParcela;
 	
 	@Column
 	private String dataVencimento;
@@ -30,15 +36,33 @@ public class Parcela {
 	private Float valorParcela;
 	
 	@Column
-	private Float valorPago;
+	private int valorPago;
 
 	public Long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Long id){
 		this.id = id;
 	}
+
+	public Long getIdCliente() {
+		return idCliente;
+	}
+
+	
+	public void setIdCliente(Long idCliente) {
+		this.idCliente = idCliente;
+	}
+
+	public int getNumeroParcela() {
+		return numeroParcela;
+	}
+
+	public void setNumeroParcela(int numeroParcela) {
+		this.numeroParcela = numeroParcela;
+	}
+
 
 	public String getDataVencimento() {
 		return dataVencimento;
@@ -72,11 +96,11 @@ public class Parcela {
 		this.valorParcela = valorParcela;
 	}
 
-	public Float getValorPago() {
+	public int getValorPago() {
 		return valorPago;
 	}
 
-	public void setValorPago(Float valorPago) {
+	public void setValorPago(int valorPago) {
 		this.valorPago = valorPago;
 	}
 	
