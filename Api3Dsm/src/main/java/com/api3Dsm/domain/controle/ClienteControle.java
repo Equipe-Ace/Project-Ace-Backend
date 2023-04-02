@@ -1,6 +1,7 @@
 package com.api3Dsm.domain.controle;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -59,11 +60,13 @@ public class ClienteControle {
         float precoCadaParcela = precoDoServico / 12;
         List<Parcela> listaParcelas = new ArrayList<>();
 
+
         for(int i = 0; i <12; i++){
             Parcela parcela = new Parcela();
 		
             parcela.setValorParcela(precoCadaParcela);
             parcela.setNumeroParcela((i +1));
+			parcela.setDataVencimento("30/04/2023");
 			
             listaParcelas.add(parcela);
             cliente.getServico().setParcelas(listaParcelas);
@@ -132,28 +135,8 @@ public class ClienteControle {
 		return clienteAntigo;
 	}*/
 
-	@CrossOrigin
-	@GetMapping("/buscarParcela/{id}")
-	public Parcela buscarParcela(@PathVariable Long id){
-		Cliente clienteSelecionado = clienteRepositorio.getReferenceById(id);
-		List<Parcela> listaParcelas = clienteSelecionado.getServico().getParcelas();
-		Parcela parcelaObtida = new Parcela();
-		for(Parcela parcela: listaParcelas){
-			if(parcela.getValorPago() == 0){
-				parcelaObtida = parcela;
-				break;
-			}
-		}
-		return parcelaObtida;
-	}
+	
 
-	@CrossOrigin
-	@PutMapping("/atualizarParcela")
-	public Parcela atualizaParcela(@RequestBody Parcela parcela){
-		Parcela parcelaAtualizar  = parcelaRepositorio.getReferenceById(parcela.getId());
-		parcelaAtualizar = parcela;
-		parcelaRepositorio.saveAndFlush(parcelaAtualizar);
-		return parcelaAtualizar;
-	}
+	
 
 }
