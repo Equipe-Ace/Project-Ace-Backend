@@ -29,16 +29,16 @@ public class Parcela {
 	private LocalDate dataVencimento;
 	
 	@Column
-	private String dataPagamento;
+	private LocalDate	dataPagamento;
 	
 	@Column
-	private String dataCredito;
+	private LocalDate	dataCredito;
 	
 	@Column
-	private Float valorParcela;
+	private double valorParcela;
 	
 	@Column
-	private int valorPago;
+	private Double valorPago;
 
 	public Long getId() {
 		return id;
@@ -74,36 +74,41 @@ public class Parcela {
 		this.dataVencimento = dataVencimento;
 	}
 
-	public String getDataPagamento() {
+	public LocalDate getDataPagamento() {
 		return dataPagamento;
 	}
 
-	public void setDataPagamento(String dataPagamento) {
+	public void setDataPagamento(LocalDate dataPagamento) {
 		this.dataPagamento = dataPagamento;
 	}
 
-	public String getDataCredito() {
+	public LocalDate getDataCredito() {
 		return dataCredito;
 	}
 
-	public void setDataCredito(String dataCredito) {
+	public void setDataCredito(LocalDate dataCredito) {
 		this.dataCredito = dataCredito;
 	}
 
-	public Float getValorParcela() {
+	public double getValorParcela() {
 		return valorParcela;
 	}
 
-	public void setValorParcela(Float valorParcela) {
-		this.valorParcela = valorParcela;
+	public void setValorParcela(double precoCadaParcela) {
+		this.valorParcela = precoCadaParcela;
 	}
 
-	public int getValorPago() {
+	public Double getValorPago() {
 		return valorPago;
 	}
 
-	public void setValorPago(int valorPago) {
+	public void setValorPago(Double  valorPago) {
 		this.valorPago = valorPago;
+	}
+
+	public void setValorParcela(Double precoCadaParcela) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	 
