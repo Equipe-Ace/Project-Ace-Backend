@@ -1,5 +1,6 @@
 package com.api3Dsm.domain.controle;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,5 +53,29 @@ public class ParcelaControle {
 		parcelaAtualizar = parcela;
 		parcelaRepositorio.saveAndFlush(parcelaAtualizar);
 		return parcelaAtualizar;
+	}
+
+	@CrossOrigin
+	@GetMapping("/buscarParcelas/pagamento/{dtInicio}/{dtFinal}")
+	public List<Parcela> filtrarPorDataPagamento(@PathVariable LocalDate dtInicio,
+	@PathVariable LocalDate dtFinal){
+		List<Parcela> parcelasFiltradas = parcelaRepositorio.dataPagamentoEntre(dtInicio, dtFinal);
+		return parcelasFiltradas;
+	}
+
+	@CrossOrigin
+	@GetMapping("/buscarParcelas/vencimento/{dtInicio}/{dtFinal}")
+	public List<Parcela> filtrarPorDataVencimento(@PathVariable LocalDate dtInicio,
+	@PathVariable LocalDate dtFinal){
+		List<Parcela> parcelasFiltradas = parcelaRepositorio.dataVencimentoEntre(dtInicio, dtFinal);
+		return parcelasFiltradas;
+	}
+
+	@CrossOrigin
+	@GetMapping("/buscarParcelas/credito/{dtInicio}/{dtFinal}")
+	public List<Parcela> filtrarPorDataCredito(@PathVariable LocalDate dtInicio,
+	@PathVariable LocalDate dtFinal){
+		List<Parcela> parcelasFiltradas = parcelaRepositorio.dataCreditoEntre(dtInicio, dtFinal);
+		return parcelasFiltradas;
 	}
 }
