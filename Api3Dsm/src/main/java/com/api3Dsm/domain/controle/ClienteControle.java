@@ -57,8 +57,8 @@ public class ClienteControle {
 	@PostMapping("/inserir")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void cadastrarCliente(@Valid @RequestBody Cliente cliente){
-		float precoDoServico = cliente.getServico().getPreco();
-        float precoCadaParcela = precoDoServico / 12;
+		Double precoDoServico = cliente.getServico().getPreco();
+        Double precoCadaParcela = precoDoServico / 12;
         List<Parcela> listaParcelas = new ArrayList<>();
 		LocalDate dataVenci = LocalDate.now();
 		
