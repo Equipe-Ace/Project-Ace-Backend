@@ -35,7 +35,7 @@ public class Parcela {
 	private LocalDate	dataCredito;
 	
 	@Column
-	private double valorParcela;
+	private Double valorParcela;
 	
 	@Column
 	private Double valorPago;
@@ -90,11 +90,11 @@ public class Parcela {
 		this.dataCredito = dataCredito;
 	}
 
-	public double getValorParcela() {
+	public Double getValorParcela() {
 		return valorParcela;
 	}
 
-	public void setValorParcela(double precoCadaParcela) {
+	public void setValorParcela(Double precoCadaParcela) {
 		this.valorParcela = precoCadaParcela;
 	}
 
@@ -102,14 +102,8 @@ public class Parcela {
 		return valorPago;
 	}
 
-	public void setValorPago(Double  valorPago) {
+	public void setValorPago(double  valorPago) {
 		this.valorPago = valorPago;
 	}
 
-	public void setValorParcela(Double precoCadaParcela) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	 
 }
