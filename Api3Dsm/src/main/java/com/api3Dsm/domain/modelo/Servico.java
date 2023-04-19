@@ -1,18 +1,13 @@
 package com.api3Dsm.domain.modelo;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-
 import lombok.EqualsAndHashCode;
 
 
@@ -27,7 +22,7 @@ public class Servico {
 	private Long id;
 	
 	@Column
-	private Double  preco;
+	private float preco;
 	
 	@OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Parcela> parcelas = new ArrayList<>();
@@ -41,11 +36,11 @@ public class Servico {
 		this.id = id;
 	}
 
-	public Double getPreco() {
+	public float getPreco() {
 		return preco;
 	}
 
-	public void setPreco(Double preco) {
+	public void setPreco(float preco) {
 		this.preco = preco;
 	}
 
