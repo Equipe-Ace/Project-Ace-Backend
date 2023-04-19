@@ -36,7 +36,7 @@ public class ParcelaControle {
 		List<Parcela> listaParcelas = clienteSelecionado.getServico().getParcelas();
 		Parcela parcelaObtida = new Parcela();
 		for(Parcela parcela: listaParcelas){
-			if(parcela.getValorPago() == 0){
+			if(parcela.getValorPago() < parcela.getValorParcela()){
 				parcelaObtida = parcela;
 				break;
 			}
