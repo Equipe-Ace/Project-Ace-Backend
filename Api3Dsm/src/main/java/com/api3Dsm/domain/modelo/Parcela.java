@@ -35,10 +35,10 @@ public class Parcela {
 	private LocalDate	dataCredito;
 	
 	@Column
-	private Double valorParcela;
+	private float valorParcela;
 	
 	@Column
-	private Double valorPago;
+	private float valorPago;
 
 	public Long getId() {
 		return id;
@@ -90,19 +90,19 @@ public class Parcela {
 		this.dataCredito = dataCredito;
 	}
 
-	public Double getValorParcela() {
+	public float getValorParcela() {
 		return valorParcela;
 	}
 
-	public void setValorParcela(Double precoCadaParcela) {
+	public void setValorParcela(float precoCadaParcela) {
 		this.valorParcela = precoCadaParcela;
 	}
 
-	public Double getValorPago() {
+	public float getValorPago() {
 		return valorPago;
 	}
 
-	public void setValorPago(double  valorPago) {
+	public void setValorPago(float  valorPago) {
 		this.valorPago = valorPago;
 	}
 

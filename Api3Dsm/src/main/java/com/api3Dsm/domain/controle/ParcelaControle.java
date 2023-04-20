@@ -49,8 +49,17 @@ public class ParcelaControle {
 	@PutMapping("/atualizarParcela")
 	public Parcela atualizaParcela(@RequestBody Parcela parcela){
 		Parcela parcelaAtualizar  = parcelaRepositorio.getReferenceById(parcela.getId());
+		float valorExtraPago = parcela.getValorPago() - parcela.getValorParcela();
+		if(valorExtraPago > 0) {
+			parcela.setValorPago(parcela.getValorParcela());
+		}
 		parcelaAtualizar = parcela;
 		parcelaRepositorio.saveAndFlush(parcelaAtualizar);
+		if(valorExtraPago > 0){
+			Parcela parcelaSeguinte = buscarParcela(parcela.getIdCliente());
+			parcelaSeguinte.setValorPago(valorExtraPago);
+			atualizaParcela(parcelaSeguinte);
+		}
 		return parcelaAtualizar;
 	}
 }
