@@ -36,7 +36,7 @@ public class ParcelaControle {
 		List<Parcela> listaParcelas = clienteSelecionado.getServico().getParcelas();
 		Parcela parcelaObtida = new Parcela();
 		for(Parcela parcela: listaParcelas){
-			if(parcela.getValorPago() == 0){
+			if(parcela.getValorPago() < parcela.getValorParcela()){
 				parcelaObtida = parcela;
 				break;
 			}
@@ -49,8 +49,17 @@ public class ParcelaControle {
 	@PutMapping("/atualizarParcela")
 	public Parcela atualizaParcela(@RequestBody Parcela parcela){
 		Parcela parcelaAtualizar  = parcelaRepositorio.getReferenceById(parcela.getId());
+		float valorExtraPago = parcela.getValorPago() - parcela.getValorParcela();
+		if(valorExtraPago > 0) {
+			parcela.setValorPago(parcela.getValorParcela());
+		}
 		parcelaAtualizar = parcela;
 		parcelaRepositorio.saveAndFlush(parcelaAtualizar);
+		if(valorExtraPago > 0 && parcela.getNumeroParcela() != 12){
+			Parcela parcelaSeguinte = buscarParcela(parcela.getIdCliente());
+			parcelaSeguinte.setValorPago(valorExtraPago);
+			atualizaParcela(parcelaSeguinte);
+		}
 		return parcelaAtualizar;
 	}
 }

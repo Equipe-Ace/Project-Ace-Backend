@@ -27,7 +27,7 @@ public class Servico {
 	private Long id;
 	
 	@Column
-	private Double  preco;
+	private float  preco;
 	
 	@OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Parcela> parcelas = new ArrayList<>();
@@ -41,11 +41,11 @@ public class Servico {
 		this.id = id;
 	}
 
-	public Double getPreco() {
+	public float getPreco() {
 		return preco;
 	}
 
-	public void setPreco(Double preco) {
+	public void setPreco(float preco) {
 		this.preco = preco;
 	}
 
