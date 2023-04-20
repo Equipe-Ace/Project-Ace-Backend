@@ -62,4 +62,15 @@ public class ParcelaControle {
 		}
 		return parcelaAtualizar;
 	}
+    
+    @CrossOrigin
+    @GetMapping("/buscarParcelas/pagamento/{dtInicio}/{dtFinal}")
+    public List<Parcela> filtrarPorDataPagamento(@PathVariable String dtInicio,
+    @PathVariable String dtFinal){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate dataInicio = LocalDate.parse(dtInicio, formatter);
+        LocalDate dataFinal = LocalDate.parse(dtFinal, formatter);
+        List<Parcela> parcelasFiltradas = parcelaRepositorio.dataPagamentoEntre(dataInicio, dataFinal);
+        return parcelasFiltradas;
+    }
 }
