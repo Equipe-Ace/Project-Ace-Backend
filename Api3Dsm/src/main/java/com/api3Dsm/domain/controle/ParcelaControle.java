@@ -55,7 +55,7 @@ public class ParcelaControle {
 		}
 		parcelaAtualizar = parcela;
 		parcelaRepositorio.saveAndFlush(parcelaAtualizar);
-		if(valorExtraPago > 0){
+		if(valorExtraPago > 0 && parcela.getNumeroParcela() != 12){
 			Parcela parcelaSeguinte = buscarParcela(parcela.getIdCliente());
 			parcelaSeguinte.setValorPago(valorExtraPago);
 			atualizaParcela(parcelaSeguinte);
