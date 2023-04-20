@@ -66,17 +66,6 @@ public class ParcelaControle {
 	}
     
     @CrossOrigin
-    @GetMapping("/buscarParcelas/pagamento/{dtInicio}/{dtFinal}")
-    public List<Parcela> filtrarPorDataPagamento(@PathVariable String dtInicio,
-    @PathVariable String dtFinal){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate dataInicio = LocalDate.parse(dtInicio, formatter);
-        LocalDate dataFinal = LocalDate.parse(dtFinal, formatter);
-        List<Parcela> parcelasFiltradas = parcelaRepositorio.dataPagamentoEntre(dataInicio, dataFinal);
-        return parcelasFiltradas;
-    }
-    
-    @CrossOrigin
     @GetMapping("/buscarParcelas/vencimento/{dtInicio}/{dtFinal}")
     public List<Parcela> filtrarPorDataVencimento(@PathVariable String dtInicio,
     @PathVariable String dtFinal){
@@ -86,4 +75,17 @@ public class ParcelaControle {
         List<Parcela> parcelasFiltradas = parcelaRepositorio.dataVencimentoEntre(dataInicio, dataFinal);
         return parcelasFiltradas;
     }
+
+    @CrossOrigin
+    @GetMapping("/buscarParcelas/credito/{dtInicio}/{dtFinal}")
+    public List<Parcela> filtrarPorDataCredito(@PathVariable String dtInicio,
+    @PathVariable String dtFinal){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate dataInicio = LocalDate.parse(dtInicio, formatter);
+        LocalDate dataFinal = LocalDate.parse(dtFinal, formatter);
+        List<Parcela> parcelasFiltradas = parcelaRepositorio.dataCreditoEntre(dataInicio, dataFinal);
+        return parcelasFiltradas;
+    }
+    
+    
 }
