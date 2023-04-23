@@ -57,6 +57,7 @@ public class ClienteControle {
 	@PostMapping("/inserir")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void cadastrarCliente(@Valid @RequestBody Cliente cliente){
+		String nomeDoCliente = cliente.getNome();
 		float precoDoServico = cliente.getServico().getPreco();
         float precoCadaParcela = precoDoServico / 12;
         List<Parcela> listaParcelas = new ArrayList<>();
@@ -68,6 +69,7 @@ public class ClienteControle {
 		
             parcela.setValorParcela(precoCadaParcela);
             parcela.setNumeroParcela((i +1));
+			parcela.setNomeCliente(nomeDoCliente);
 			//parcela.setDataVencimento("30/04/2023");
 			if(i == 0){
 				parcela.setDataVencimento(dataVenci.plusDays(30));

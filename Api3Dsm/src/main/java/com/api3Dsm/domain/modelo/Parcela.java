@@ -23,16 +23,27 @@ public class Parcela {
 	private Long idCliente;
 
 	@Column
+	private String nomeCliente;
+
+	public String getNomeCliente() {
+		return nomeCliente;
+	}
+
+	public void setNomeCliente(String nomeCliente) {
+		this.nomeCliente = nomeCliente;
+	}
+
+	@Column
 	private int numeroParcela;
 	
 	@Column
 	private LocalDate dataVencimento;
 	
 	@Column
-	private LocalDate	dataPagamento;
+	private LocalDate dataPagamento;
 	
 	@Column
-	private LocalDate	dataCredito;
+	private LocalDate dataCredito;
 	
 	@Column
 	private float valorParcela;
