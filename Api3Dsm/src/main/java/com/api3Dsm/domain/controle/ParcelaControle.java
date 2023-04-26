@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +33,7 @@ public class ParcelaControle {
 	private ParcelaRepositorio parcelaRepositorio;
 
     @CrossOrigin
+	@PreAuthorize("hasAnyAuthority('ADMIN', 'FINANCEIRO')")
 	@GetMapping("/buscarParcela/{id}")
 	public Parcela buscarParcela(@PathVariable Long id){
 		Cliente clienteSelecionado = clienteRepositorio.getReferenceById(id);
@@ -65,7 +67,9 @@ public class ParcelaControle {
 		return parcelaAtualizar;
 	}
     
+	
     @CrossOrigin
+	@PreAuthorize("hasAnyAuthority('ADMIN', 'FINANCEIRO')")
     @GetMapping("/buscarParcelas/vencimento/{dtInicio}/{dtFinal}")
     public List<Parcela> filtrarPorDataVencimento(@PathVariable String dtInicio,
     @PathVariable String dtFinal){
@@ -77,6 +81,7 @@ public class ParcelaControle {
     }
 
 	@CrossOrigin
+	@PreAuthorize("hasAnyAuthority('ADMIN', 'FINANCEIRO')")
     @GetMapping("/buscarParcelas/pagamento/{dtInicio}/{dtFinal}")
     public List<Parcela> filtrarPorDataPagamento(@PathVariable String dtInicio,
     @PathVariable String dtFinal){
@@ -88,6 +93,7 @@ public class ParcelaControle {
     }
 
     @CrossOrigin
+	@PreAuthorize("hasAnyAuthority('ADMIN', 'FINANCEIRO')")
     @GetMapping("/buscarParcelas/credito/{dtInicio}/{dtFinal}")
     public List<Parcela> filtrarPorDataCredito(@PathVariable String dtInicio,
     @PathVariable String dtFinal){

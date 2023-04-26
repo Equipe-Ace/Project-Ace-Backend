@@ -7,10 +7,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,10 +54,11 @@ public class ClienteControle {
 		gerador.gerarParcelas(servico);
 		clienteRepositorio.save(usuario);
 	}*/
-
+	
 	@CrossOrigin
 	@PostMapping("/inserir")
 	@ResponseStatus(HttpStatus.CREATED)
+	@PreAuthorize("hasAnyAuthority('ADMIN', 'COMERCIAL')")
 	public void cadastrarCliente(@Valid @RequestBody Cliente cliente){
 		String nomeDoCliente = cliente.getNome();
 		float precoDoServico = cliente.getServico().getPreco();
@@ -105,12 +108,14 @@ public class ClienteControle {
 
 	}
 
+	@PreAuthorize("hasAnyAuthority('ADMIN', 'COMERCIAL', 'FINANCEIRO')")
 	@GetMapping
 	public List<Cliente> Listar() {
 		return clienteRepositorio.findAll();
 	}
 
 	@GetMapping("/{id}")
+	@PreAuthorize("hasAnyAuthority('ADMIN','FINANCEIRO')")
 	public ResponseEntity<Cliente> buscar(@PathVariable Long id) {
 		return clienteRepositorio.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
 	}
