@@ -51,10 +51,11 @@ public class AutenticacaoServico{
         );
 
         var usuario = usuarioRepositorio.findByEmail(request.getEmail()).orElseThrow();
-        
+        String userRole = usuario.getCargo();
         var jwtToken = jwtServico.generateToken(usuario);
         return AuthenticationResponse.builder()
         .token(jwtToken)
+        .role(userRole)
         .build();
     }
     
