@@ -58,7 +58,7 @@ public class ClienteControle {
 	@CrossOrigin
 	@PostMapping("/inserir")
 	@ResponseStatus(HttpStatus.CREATED)
-	@PreAuthorize("hasAnyAuthority('ADMIN', 'COMERCIAL')")
+	// @PreAuthorize("hasAnyAuthority('ADMIN', 'COMERCIAL')")
 	public void cadastrarCliente(@Valid @RequestBody Cliente cliente){
 		String nomeDoCliente = cliente.getNome();
 		float precoDoServico = cliente.getServico().getPreco();
@@ -108,7 +108,7 @@ public class ClienteControle {
 
 	}
 
-	@PreAuthorize("hasAnyAuthority('ADMIN', 'COMERCIAL', 'FINANCEIRO')")
+	// @PreAuthorize("hasAnyAuthority('ADMIN', 'COMERCIAL', 'FINANCEIRO')")
 	@GetMapping
 	public List<Cliente> Listar() {
 		return clienteRepositorio.findAll();

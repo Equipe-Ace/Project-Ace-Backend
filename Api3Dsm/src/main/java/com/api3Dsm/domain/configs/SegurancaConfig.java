@@ -30,7 +30,7 @@ public class SegurancaConfig {
         .csrf()
         .disable()
         .authorizeHttpRequests()
-        .antMatchers("/login/**")
+        .antMatchers("/**")
         //.requestMatchers("login/**")
         .permitAll()
         .anyRequest()
