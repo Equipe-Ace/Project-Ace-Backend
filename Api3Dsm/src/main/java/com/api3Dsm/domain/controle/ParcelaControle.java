@@ -62,6 +62,10 @@ public class ParcelaControle {
 		if(valorExtraPago > 0 && parcela.getNumeroParcela() != 12){
 			Parcela parcelaSeguinte = buscarParcela(parcela.getIdCliente());
 			parcelaSeguinte.setValorPago(valorExtraPago);
+			if(parcelaSeguinte.getValorPago() >= parcelaSeguinte.getValorParcela()) {
+				parcelaSeguinte.setDataCredito(parcela.getDataCredito());
+				parcelaSeguinte.setDataPagamento(parcela.getDataPagamento());
+			}
 			atualizaParcela(parcelaSeguinte);
 		}
 		return parcelaAtualizar;
