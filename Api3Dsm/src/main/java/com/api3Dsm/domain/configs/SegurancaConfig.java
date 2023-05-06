@@ -27,10 +27,12 @@ public class SegurancaConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
+        .cors()
+        .and()
         .csrf()
         .disable()
         .authorizeHttpRequests()
-        .antMatchers("/**")
+        .antMatchers("/login/**")
         //.requestMatchers("login/**")
         .permitAll()
         .anyRequest()

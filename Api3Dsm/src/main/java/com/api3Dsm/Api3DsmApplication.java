@@ -8,6 +8,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.api3Dsm.domain.modelo.Usuario;
@@ -60,13 +62,38 @@ public class Api3DsmApplication implements CommandLineRunner{
 */
 
 @SpringBootApplication
-public class Api3DsmApplication {
+public class Api3DsmApplication implements CommandLineRunner{
+
+	@Autowired
+	private UsuarioRepositorio usuarioRepositorio;
+
+	PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 	public static void main(String[] args) {
 		SpringApplication.run(Api3DsmApplication.class, args);
 	}
 
 
-	
 
+	@Override
+	public void run(String... args) throws Exception {
+		
+		Usuario user = new Usuario();
+		user.setEmail("admin@gmail");
+		user.setSenha(passwordEncoder.encode("123"));
+		user.setCargo("ADMIN");
+		usuarioRepositorio.save(user);
+
+		Usuario userFin = new Usuario();
+		userFin.setEmail("fin@gmail");
+		userFin.setSenha(passwordEncoder.encode("123"));
+		userFin.setCargo("FINANCEIRO");
+		usuarioRepositorio.save(userFin);
+
+		Usuario userCom = new Usuario();
+		userCom.setEmail("com@gmail");
+		userCom.setSenha(passwordEncoder.encode("123"));
+		userCom.setCargo("COMERCIAL");
+		usuarioRepositorio.save(userCom);
+	}
 }
