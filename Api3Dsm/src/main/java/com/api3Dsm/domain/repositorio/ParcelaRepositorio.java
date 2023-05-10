@@ -24,4 +24,7 @@ public interface ParcelaRepositorio extends JpaRepository<Parcela, Long>{
 	    @Query("SELECT parcelas FROM Parcela parcelas WHERE parcelas.dataCredito BETWEEN :dtInicio AND :dtFinal")
 	    List<Parcela> dataCreditoEntre(LocalDate dtInicio, LocalDate dtFinal);
 
+		@Query("SELECT * FROM Parcela parcelas WHERE parcelas.dataVencimento < CURDATE()")
+		List<Parcela> listaParcelasAtrasadas();
+
 }

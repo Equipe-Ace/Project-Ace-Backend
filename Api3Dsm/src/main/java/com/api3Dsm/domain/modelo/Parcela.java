@@ -51,6 +51,9 @@ public class Parcela {
 	@Column
 	private float valorPago;
 
+	@Column
+	private boolean statusAtraso;
+
 	public Long getId() {
 		return id;
 	}
@@ -115,6 +118,14 @@ public class Parcela {
 
 	public void setValorPago(float  valorPago) {
 		this.valorPago = valorPago;
+	}
+
+	public boolean getStatusAtraso() {
+		return statusAtraso;
+	}
+
+	public void setStatusAtraso(boolean statusAtraso) {
+		this.statusAtraso = statusAtraso;
 	}
 
 }
