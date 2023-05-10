@@ -113,13 +113,8 @@ public class ParcelaControle {
 			}else{
 				return parcelasFiltradas;
 			}
-			
 		}
-		return parcelasFiltradas;
-
-		
-
-		
+		return parcelasFiltradas;		
     }
 
     @CrossOrigin
@@ -132,19 +127,17 @@ public class ParcelaControle {
         LocalDate dataFinal = LocalDate.parse(dtFinal, formatter);
         List<Parcela> parcelasFiltradas = parcelaRepositorio.dataCreditoEntre(dataInicio, dataFinal);
 
-		//fazer uma lógica onde retorne somente as parcelas que foram pagas
-
-		LocalDate hoje = LocalDate.now();
-		if(dataInicio.isBefore(hoje) && dataFinal.isAfter(hoje)){
-			List<Parcela> parcelasFiltradas2 = parcelaRepositorio.dataCreditoEntre(hoje, dataFinal);
-			parcelasFiltradas.addAll(parcelasFiltradas2);
+		for (Parcela parcela : parcelasFiltradas) {
+			if(parcela.getDataCredito().isAfter(parcela.getDataPagamento())){
+				return parcelasFiltradas;
+			}
+			else if(parcela.getDataCredito() == (parcela.getDataVencimento())){
+				return parcelasFiltradas;
+    		}
+			else{
+				return null;
+			}
 		}
-
-
-
-
-        return parcelasFiltradas;
-    }
-    
-    
+		return parcelasFiltradas;
+	}
 }
