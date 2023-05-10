@@ -93,20 +93,7 @@ public class ParcelaControle {
 				return parcelasFiltradas;
 			}
 		}
-
-		
-
-
-
-
-
-
-
-
-
-		
-
-        return parcelasFiltradas;
+				return parcelasFiltradas;
     }
 
 	@CrossOrigin
@@ -118,7 +105,21 @@ public class ParcelaControle {
         LocalDate dataInicio = LocalDate.parse(dtInicio, formatter);
         LocalDate dataFinal = LocalDate.parse(dtFinal, formatter);
         List<Parcela> parcelasFiltradas = parcelaRepositorio.dataPagamentoEntre(dataInicio, dataFinal);
-        return parcelasFiltradas;
+        for (Parcela parcela : parcelasFiltradas) {
+			if(parcela.getValorPago() == 0){
+				return null;
+			}else if(parcela.getValorPago() < parcela.getValorParcela()){
+				return null;
+			}else{
+				return parcelasFiltradas;
+			}
+			
+		}
+		return parcelasFiltradas;
+
+		
+
+		
     }
 
     @CrossOrigin
