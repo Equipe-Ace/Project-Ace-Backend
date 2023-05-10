@@ -140,4 +140,4 @@ public class ParcelaControle {
 		}
 		return parcelasFiltradas;
 	}
-}
+};
