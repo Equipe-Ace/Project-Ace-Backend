@@ -1,5 +1,6 @@
 package com.api3Dsm.domain.controle;
 
+import java.io.Console;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -77,7 +78,7 @@ public class ClienteControle {
 			if(i == 0){
 				parcela.setDataVencimento(dataVenci.plusDays(30));
 			}
-
+			parcela.setStatusAtraso(false);
             listaParcelas.add(parcela);
             cliente.getServico().setParcelas(listaParcelas);
         }
