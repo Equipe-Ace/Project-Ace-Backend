@@ -125,7 +125,6 @@ public class Parcela {
 	}
 
 	public void setStatusAtraso(boolean statusAtraso) {
-		System.out.println(this.numeroParcela);
 		this.statusAtraso = statusAtraso;
 	}
 
