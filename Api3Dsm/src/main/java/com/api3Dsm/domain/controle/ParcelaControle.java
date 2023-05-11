@@ -1,5 +1,6 @@
 package com.api3Dsm.domain.controle;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -77,11 +78,22 @@ public class ParcelaControle {
     @GetMapping("/buscarParcelas/vencimento/{dtInicio}/{dtFinal}")
     public List<Parcela> filtrarPorDataVencimento(@PathVariable String dtInicio,
     @PathVariable String dtFinal){
+
+		LocalDate hoje = LocalDate.now();
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate dataInicio = LocalDate.parse(dtInicio, formatter);
         LocalDate dataFinal = LocalDate.parse(dtFinal, formatter);
         List<Parcela> parcelasFiltradas = parcelaRepositorio.dataVencimentoEntre(dataInicio, dataFinal);
-        return parcelasFiltradas;
+
+		for (Parcela parcela : parcelasFiltradas) {
+			if(parcela.getDataVencimento().isAfter(hoje)){
+				return null;
+			}else{
+				return parcelasFiltradas;
+			}
+		}
+				return parcelasFiltradas;
     }
 
 	@CrossOrigin
@@ -93,7 +105,16 @@ public class ParcelaControle {
         LocalDate dataInicio = LocalDate.parse(dtInicio, formatter);
         LocalDate dataFinal = LocalDate.parse(dtFinal, formatter);
         List<Parcela> parcelasFiltradas = parcelaRepositorio.dataPagamentoEntre(dataInicio, dataFinal);
-        return parcelasFiltradas;
+        for (Parcela parcela : parcelasFiltradas) {
+			if(parcela.getValorPago() == 0){
+				return null;
+			}else if(parcela.getValorPago() < parcela.getValorParcela()){
+				return null;
+			}else{
+				return parcelasFiltradas;
+			}
+		}
+		return parcelasFiltradas;		
     }
 
     @CrossOrigin
@@ -105,8 +126,18 @@ public class ParcelaControle {
         LocalDate dataInicio = LocalDate.parse(dtInicio, formatter);
         LocalDate dataFinal = LocalDate.parse(dtFinal, formatter);
         List<Parcela> parcelasFiltradas = parcelaRepositorio.dataCreditoEntre(dataInicio, dataFinal);
-        return parcelasFiltradas;
-    }
-    
-    
-}
+
+		for (Parcela parcela : parcelasFiltradas) {
+			if(parcela.getDataCredito().isAfter(parcela.getDataPagamento())){
+				return parcelasFiltradas;
+			}
+			else if(parcela.getDataCredito() == (parcela.getDataVencimento())){
+				return parcelasFiltradas;
+    		}
+			else{
+				return null;
+			}
+		}
+		return parcelasFiltradas;
+	}
+};
