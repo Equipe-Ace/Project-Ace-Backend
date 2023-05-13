@@ -54,6 +54,9 @@ public class Parcela {
 	@Column
 	private boolean statusAtraso;
 
+	@Column 
+	private String statusPago;
+
 	public Long getId() {
 		return id;
 	}
@@ -126,6 +129,14 @@ public class Parcela {
 
 	public void setStatusAtraso(boolean statusAtraso) {
 		this.statusAtraso = statusAtraso;
+	}
+
+	public String getStatusPago() {
+		return statusPago;
+	}
+
+	public void setStatusPago(String statusPago) {
+		this.statusPago = statusPago;
 	}
 
 }

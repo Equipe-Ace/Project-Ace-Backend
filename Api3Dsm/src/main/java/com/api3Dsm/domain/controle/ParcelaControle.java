@@ -60,12 +60,13 @@ public class ParcelaControle {
 		}
 		parcelaAtualizar = parcela;
 		parcelaRepositorio.saveAndFlush(parcelaAtualizar);
-		if(valorExtraPago > 0 && parcela.getNumeroParcela() != 12){
+		if(valorExtraPago > 0){
 			Parcela parcelaSeguinte = buscarParcela(parcela.getIdCliente());
 			parcelaSeguinte.setValorPago(valorExtraPago);
 			if(parcelaSeguinte.getValorPago() >= parcelaSeguinte.getValorParcela()) {
 				parcelaSeguinte.setDataCredito(parcela.getDataCredito());
 				parcelaSeguinte.setDataPagamento(parcela.getDataPagamento());
+				parcelaSeguinte.setStatusPago("Pago");
 			}
 			atualizaParcela(parcelaSeguinte);
 		}
