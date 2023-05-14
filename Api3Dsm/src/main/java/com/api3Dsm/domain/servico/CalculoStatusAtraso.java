@@ -26,8 +26,10 @@ public class CalculoStatusAtraso {
         List<Parcela> parcelasFiltradas = parcelaRepositorio.listaParcelasAtrasadas(dtAtual);
         if(parcelasFiltradas != null) {
             for(Parcela parcela : parcelasFiltradas) {
-                parcela.setStatusAtraso(true);
-                parcelaRepositorio.saveAndFlush(parcela);
+                if(parcela.getStatusPago() == "À pagar") {
+                    parcela.setStatusAtraso(true);
+                    parcelaRepositorio.saveAndFlush(parcela);
+                }
             }
         }
         return parcelasFiltradas;
