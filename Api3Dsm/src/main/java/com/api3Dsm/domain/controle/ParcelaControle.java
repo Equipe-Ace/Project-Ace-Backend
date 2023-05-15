@@ -3,6 +3,7 @@ package com.api3Dsm.domain.controle;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,15 +87,30 @@ public class ParcelaControle {
         LocalDate dataInicio = LocalDate.parse(dtInicio, formatter);
         LocalDate dataFinal = LocalDate.parse(dtFinal, formatter);
         List<Parcela> parcelasFiltradas = parcelaRepositorio.dataVencimentoEntre(dataInicio, dataFinal);
-
-		for (Parcela parcela : parcelasFiltradas) {
-			if(parcela.getDataVencimento().isAfter(hoje)){
-				return null;
+		
+		// for (Parcela parcela : parcelasFiltradas) {
+		// 	if(parcela.getDataVencimento().isAfter(hoje)){
+		// 		return null;
+		// 	}else{
+		// 		return parcelasFiltradas;
+		// 	}
+		// }
+		// 		return parcelasFiltradas;
+		
+		//************************
+		
+		List<Parcela> parcelasVencidas = new ArrayList<>();
+		for(Parcela parcela : parcelasFiltradas){
+			if(parcela.getDataVencimento().isBefore(hoje) || parcela.getDataVencimento().isEqual(hoje)){
+				parcela.setStatusVencida("Vencida");
+				parcelasVencidas.add(parcela);
 			}else{
-				return parcelasFiltradas;
+				parcela.setStatusVencida("A vencer");
+				parcelasVencidas.add(parcela);
 			}
 		}
-				return parcelasFiltradas;
+		return parcelasVencidas;
+		//return parcelasFiltradas;
     }
 
 	@CrossOrigin

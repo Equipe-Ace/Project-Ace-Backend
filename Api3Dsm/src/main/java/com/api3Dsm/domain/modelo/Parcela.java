@@ -57,6 +57,17 @@ public class Parcela {
 	@Column 
 	private String statusPago;
 
+	@Column
+	private String statusVencida;
+
+	public String getStatusVencida() {
+		return statusVencida;
+	}
+
+	public void setStatusVencida(String statusVencida) {
+		this.statusVencida = statusVencida;
+	}
+
 	public Long getId() {
 		return id;
 	}
