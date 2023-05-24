@@ -157,4 +157,84 @@ public class ParcelaControle {
 		}
 		return parcelasFiltradas;
 	}
+
+	@CrossOrigin
+	// @PreAuthorize("hasAnyAuthority('ADMIN', 'FINANCEIRO')")
+    @GetMapping("/buscarParcelas/{tipoRelatorio}/{dtInicio}/{dtFinal}")
+    public List<Parcela> filtrarPorDataVencimento(@PathVariable String dtInicio,
+    @PathVariable String dtFinal, @PathVariable String tipoRelatorio){
+
+		LocalDate hoje = LocalDate.now();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate dataInicio = LocalDate.parse(dtInicio, formatter);
+        LocalDate dataFinal = LocalDate.parse(dtFinal, formatter);
+        List<Parcela> parcelasFiltradas = parcelaRepositorio.dataVencimentoEntre(dataInicio, dataFinal);
+		List<Parcela> parcelasFinais = new ArrayList<>(); 
+
+		if(tipoRelatorio.equals("vencer")){
+			for(Parcela parcela : parcelasFiltradas){
+				if(parcela.getDataPagamento().equals(null) &&  parcela.getDataVencimento().isBefore(hoje)){
+					parcela.setStatusVencida("vencida");
+					parcelasFinais.add(parcela);
+				}
+				if(parcela.getDataPagamento().isAfter(parcela.getDataVencimento())){
+					parcela.setStatusVencida("paga");
+					parcelasFinais.add(parcela);
+				}
+				if(parcela.getDataPagamento().equals(null) && parcela.getDataVencimento().isAfter(hoje)){
+					parcela.setStatusVencida("A vencer");
+					parcelasFinais.add(parcela);
+				}
+				if(parcela.getDataPagamento().isBefore(parcela.getDataVencimento())){
+					parcela.setStatusVencida("paga");
+					parcelasFinais.add(parcela);
+				}
+			}
+		}
+		if(tipoRelatorio.equals("atraso")){
+			for(Parcela parcela : parcelasFiltradas){
+				if(parcela.getDataPagamento().equals(null) && parcela.getDataPagamento().isBefore(hoje)){
+					parcela.setStatusVencida("Em atraso");
+					parcelasFinais.add(parcela);
+				}
+				if(parcela.getDataPagamento().isBefore(parcela.getDataVencimento()) || parcela.getDataPagamento().isEqual(parcela.getDataVencimento())){
+					parcela.setStatusVencida("paga");
+					parcelasFinais.add(parcela);
+				}
+				if(parcela.getDataPagamento().isAfter(parcela.getDataVencimento())){
+					parcela.setStatusVencida("Paga em atraso");
+					parcelasFinais.add(parcela);
+				}
+			}
+		}
+		if(tipoRelatorio.equals("paga")){
+			for(Parcela parcela : parcelasFiltradas){
+				if(parcela.getDataPagamento().equals(null)){
+					parcela.setStatusVencida("Não paga");
+					parcelasFinais.add(parcela);
+				}else{
+					parcela.setStatusVencida("paga");
+					parcelasFinais.add(parcela);
+				}
+			}
+		}
+		if(tipoRelatorio.equals("creditada")){
+			for(Parcela parcela : parcelasFiltradas){
+				if(parcela.getDataPagamento().equals(null)){
+					parcela.setStatusVencida("Em aberto");
+					parcelasFinais.add(parcela);
+				}
+				if(parcela.getDataCredito().isBefore(hoje) || parcela.getDataCredito().equals(hoje)){
+					parcela.setStatusVencida("creditada");
+					parcelasFinais.add(parcela);
+				}
+				if(parcela.getDataCredito().isAfter(hoje)){
+					parcela.setStatusVencida("A creditar");
+					parcelasFinais.add(parcela);
+				}
+			}
+		}
+		return parcelasFinais;
+	}
 };

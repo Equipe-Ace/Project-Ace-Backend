@@ -79,19 +79,19 @@ public class Api3DsmApplication implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 		
 		Usuario user = new Usuario();
-		user.setEmail("admin@gmail");
+		user.setEmail("admin@gmail.com");
 		user.setSenha(passwordEncoder.encode("123"));
 		user.setCargo("ADMIN");
 		usuarioRepositorio.save(user);
 
 		Usuario userFin = new Usuario();
-		userFin.setEmail("fin@gmail");
+		userFin.setEmail("fin@gmail.com");
 		userFin.setSenha(passwordEncoder.encode("123"));
 		userFin.setCargo("FINANCEIRO");
 		usuarioRepositorio.save(userFin);
 
 		Usuario userCom = new Usuario();
-		userCom.setEmail("com@gmail");
+		userCom.setEmail("com@gmail.com");
 		userCom.setSenha(passwordEncoder.encode("123"));
 		userCom.setCargo("COMERCIAL");
 		usuarioRepositorio.save(userCom);
