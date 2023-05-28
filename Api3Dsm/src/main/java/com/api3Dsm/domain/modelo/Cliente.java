@@ -37,7 +37,16 @@ public class Cliente {
 	
 	@OneToOne(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Servico servico;
+
+	@Column
+	private String adimplencia;
 	
+	public String getAdimplencia() {
+		return adimplencia;
+	}
+	public void setAdimplencia(String adimplencia) {
+		this.adimplencia = adimplencia;
+	}
 	public Long getId() {
 		return id;
 	}

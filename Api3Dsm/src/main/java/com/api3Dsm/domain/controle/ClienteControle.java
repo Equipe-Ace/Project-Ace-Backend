@@ -113,8 +113,32 @@ public class ClienteControle {
 	// @PreAuthorize("hasAnyAuthority('ADMIN', 'COMERCIAL', 'FINANCEIRO')")
 	@GetMapping
 	public List<Cliente> Listar() {
-		return clienteRepositorio.findAll();
+		LocalDate dataHoje = LocalDate.now();
+		List<Cliente> todosClientes = clienteRepositorio.findAll();
+		List<Cliente> listaAtualizada = new ArrayList<>();
+		for(Cliente cliente : todosClientes){
+			List<Parcela> parcelasClientes = cliente.getServico().getParcelas();
+			for(Parcela parcela : parcelasClientes){
+				if(parcela.getDataPagamento() == null){
+					if(parcela.getDataVencimento().isAfter(dataHoje)){
+						cliente.setAdimplencia("Inadimplente");
+					}else{
+						cliente.setAdimplencia("Adimplente");
+					}
+				}else{
+					if(parcela.getDataPagamento().isAfter(parcela.getDataVencimento())){
+						cliente.setAdimplencia("Inadimplente");
+					}else{
+						cliente.setAdimplencia("Adimplente");
+					}			
+				}
+			}
+			listaAtualizada.add(cliente);
+		}
+		
+		return listaAtualizada;
 	}
+	
 
 	@GetMapping("/{id}")
 	@PreAuthorize("hasAnyAuthority('ADMIN','FINANCEIRO')")
