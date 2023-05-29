@@ -67,7 +67,6 @@ public class ParcelaControle {
 			if(parcelaSeguinte.getValorPago() >= parcelaSeguinte.getValorParcela()) {
 				parcelaSeguinte.setDataCredito(parcela.getDataCredito());
 				parcelaSeguinte.setDataPagamento(parcela.getDataPagamento());
-				parcelaSeguinte.setStatusPago("Pago");
 			}
 			atualizaParcela(parcelaSeguinte);
 		}

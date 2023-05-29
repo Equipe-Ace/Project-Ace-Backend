@@ -78,8 +78,6 @@ public class ClienteControle {
 			if(i == 0){
 				parcela.setDataVencimento(dataVenci.plusDays(30));
 			}
-			parcela.setStatusAtraso(false);
-			parcela.setStatusPago("À pagar");
             listaParcelas.add(parcela);
             cliente.getServico().setParcelas(listaParcelas);
         }

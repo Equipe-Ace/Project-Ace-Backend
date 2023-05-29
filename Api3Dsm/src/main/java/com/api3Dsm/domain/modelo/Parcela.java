@@ -52,12 +52,6 @@ public class Parcela {
 	private float valorPago;
 
 	@Column
-	private boolean statusAtraso;
-
-	@Column 
-	private String statusPago;
-
-	@Column
 	private String statusVencida;
 
 	public String getStatusVencida() {
@@ -132,22 +126,6 @@ public class Parcela {
 
 	public void setValorPago(float  valorPago) {
 		this.valorPago = valorPago;
-	}
-
-	public boolean getStatusAtraso() {
-		return statusAtraso;
-	}
-
-	public void setStatusAtraso(boolean statusAtraso) {
-		this.statusAtraso = statusAtraso;
-	}
-
-	public String getStatusPago() {
-		return statusPago;
-	}
-
-	public void setStatusPago(String statusPago) {
-		this.statusPago = statusPago;
 	}
 
 }
