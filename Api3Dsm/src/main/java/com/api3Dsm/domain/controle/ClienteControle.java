@@ -114,20 +114,26 @@ public class ClienteControle {
 		LocalDate dataHoje = LocalDate.now();
 		List<Cliente> todosClientes = clienteRepositorio.findAll();
 		List<Cliente> listaAtualizada = new ArrayList<>();
+		Boolean statusAdimplencia = false;
+		// qualquer coisa usar o while(statusadimplencia)
 		for(Cliente cliente : todosClientes){
 			List<Parcela> parcelasClientes = cliente.getServico().getParcelas();
 			for(Parcela parcela : parcelasClientes){
 				if(parcela.getDataPagamento() == null){
-					if(parcela.getDataVencimento().isAfter(dataHoje)){
+					if(parcela.getDataVencimento().isBefore(dataHoje)){
 						cliente.setAdimplencia("Inadimplente");
+						break;
 					}else{
 						cliente.setAdimplencia("Adimplente");
+						break;
 					}
 				}else{
 					if(parcela.getDataPagamento().isAfter(parcela.getDataVencimento())){
 						cliente.setAdimplencia("Inadimplente");
+						break;
 					}else{
 						cliente.setAdimplencia("Adimplente");
+						break;
 					}			
 				}
 			}
