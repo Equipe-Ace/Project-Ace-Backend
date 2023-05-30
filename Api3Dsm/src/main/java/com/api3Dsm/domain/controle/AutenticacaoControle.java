@@ -1,6 +1,7 @@
 package com.api3Dsm.domain.controle;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ public class AutenticacaoControle {
     private final AutenticacaoServico autenticacaoServico;
 
     @PostMapping("/")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<AuthenticationResponse> cadastrar(@RequestBody RegisterRequest request){
         return ResponseEntity.ok(autenticacaoServico.register(request));
     }

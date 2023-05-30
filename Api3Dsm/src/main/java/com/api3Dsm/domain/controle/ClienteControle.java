@@ -59,7 +59,7 @@ public class ClienteControle {
 	@CrossOrigin
 	@PostMapping("/inserir")
 	@ResponseStatus(HttpStatus.CREATED)
-	// @PreAuthorize("hasAnyAuthority('ADMIN', 'COMERCIAL')")
+	@PreAuthorize("hasAnyAuthority('ADMIN', 'COMERCIAL')")
 	public void cadastrarCliente(@Valid @RequestBody Cliente cliente){
 		String nomeDoCliente = cliente.getNome();
 		float precoDoServico = cliente.getServico().getPreco();
@@ -108,8 +108,9 @@ public class ClienteControle {
 
 	}
 
-	// @PreAuthorize("hasAnyAuthority('ADMIN', 'COMERCIAL', 'FINANCEIRO')")
+	
 	@GetMapping
+	@PreAuthorize("hasAnyAuthority('ADMIN', 'COMERCIAL', 'FINANCEIRO')")
 	public List<Cliente> Listar() {
 		LocalDate dataHoje = LocalDate.now();
 		List<Cliente> todosClientes = clienteRepositorio.findAll();
@@ -151,6 +152,7 @@ public class ClienteControle {
 	}
 
 	@PutMapping("/atualizar/")
+	@PreAuthorize("hasAnyAuthority('ADMIN')")
 	public ResponseEntity<Cliente> Atualizar(@Valid @RequestBody Cliente cliente) {
 		if (!clienteRepositorio.existsById(cliente.getId())) {
 			return ResponseEntity.notFound().build();
@@ -162,6 +164,7 @@ public class ClienteControle {
 	}
 
 	@DeleteMapping("/deletar/{id}")
+	@PreAuthorize("hasAnyAuthority('ADMIN')")
 	public ResponseEntity<Void> Deletar(@PathVariable Long id) {
 		if (!clienteRepositorio.existsById(id)) {
 			return ResponseEntity.notFound().build();
