@@ -173,42 +173,53 @@ public class ParcelaControle {
 		List<Parcela> parcelasFinais = new ArrayList<>(); 
 
 		if(tipoRelatorio.equals("vencer")){
+			System.out.println("oi1");
 			for(Parcela parcela : parcelasFiltradas){
-				if(parcela.getDataPagamento() == null &&  parcela.getDataVencimento().isBefore(hoje)){
+				System.out.println("oi2");
+				if(parcela.getDataPagamento()== null &&  parcela.getDataVencimento().isBefore(hoje)){
 					parcela.setStatusVencida("vencida");
 					parcelasFinais.add(parcela);
+					System.out.println("oi3");
 				}
-				if(parcela.getDataPagamento().isAfter(parcela.getDataVencimento())){
+				if(parcela.getDataPagamento() != null && parcela.getDataPagamento().isAfter(parcela.getDataVencimento())){
 					parcela.setStatusVencida("paga");
 					parcelasFinais.add(parcela);
+					System.out.println("oi4");
 				}
-				if(parcela.getDataPagamento().equals(null) && parcela.getDataVencimento().isAfter(hoje)){
+				if(parcela.getDataPagamento() == null && parcela.getDataVencimento().isAfter(hoje)){
 					parcela.setStatusVencida("A vencer");
 					parcelasFinais.add(parcela);
+					System.out.println("oi5");
 				}
-				if(parcela.getDataPagamento().isBefore(parcela.getDataVencimento())){
+				if(parcela.getDataPagamento() != null &&  parcela.getDataPagamento().isBefore(parcela.getDataVencimento())){
 					parcela.setStatusVencida("paga");
 					parcelasFinais.add(parcela);
+					System.out.println("oi6");
 				}
 			}
 		}
 		if(tipoRelatorio.equals("atraso")){
+			System.out.println("oi");
 			for(Parcela parcela : parcelasFiltradas){
-				if(parcela.getDataPagamento() == null && parcela.getDataPagamento().isBefore(hoje)){
+				if(parcela.getDataPagamento() == null && parcela.getDataVencimento().isBefore(hoje)){
 					parcela.setStatusVencida("Em atraso");
 					parcelasFinais.add(parcela);
 				}
-				if(parcela.getDataPagamento().isBefore(parcela.getDataVencimento()) || parcela.getDataPagamento().isEqual(parcela.getDataVencimento())){
+				if(parcela.getDataPagamento() != null && parcela.getDataPagamento().isBefore(parcela.getDataVencimento()) || parcela.getDataPagamento() != null && parcela.getDataPagamento().isEqual(parcela.getDataVencimento())){
 					parcela.setStatusVencida("paga");
 					parcelasFinais.add(parcela);
 				}
-				if(parcela.getDataPagamento().isAfter(parcela.getDataVencimento())){
+				if(parcela.getDataPagamento() != null && parcela.getDataPagamento().isAfter(parcela.getDataVencimento())){
 					parcela.setStatusVencida("Paga em atraso");
+					parcelasFinais.add(parcela);
+				}else{
+					parcela.setStatusVencida("A pagar");
 					parcelasFinais.add(parcela);
 				}
 			}
 		}
 		if(tipoRelatorio.equals("paga")){
+			System.out.println("oi");
 			for(Parcela parcela : parcelasFiltradas){
 				if(parcela.getDataPagamento() == null){
 					parcela.setStatusVencida("Não paga");
@@ -220,16 +231,17 @@ public class ParcelaControle {
 			}
 		}
 		if(tipoRelatorio.equals("creditada")){
+			System.out.println("oi");
 			for(Parcela parcela : parcelasFiltradas){
 				if(parcela.getDataPagamento() == null){
 					parcela.setStatusVencida("Em aberto");
 					parcelasFinais.add(parcela);
 				}
-				if(parcela.getDataCredito().isBefore(hoje) || parcela.getDataCredito().equals(hoje)){
+				if(parcela.getDataCredito() != null && parcela.getDataCredito().isBefore(hoje) || parcela.getDataCredito() != null &&  parcela.getDataCredito().equals(hoje)){
 					parcela.setStatusVencida("creditada");
 					parcelasFinais.add(parcela);
 				}
-				if(parcela.getDataCredito().isAfter(hoje)){
+				if(parcela.getDataCredito() != null && parcela.getDataCredito().isAfter(hoje)){
 					parcela.setStatusVencida("A creditar");
 					parcelasFinais.add(parcela);
 				}
