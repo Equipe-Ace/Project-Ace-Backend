@@ -180,17 +180,17 @@ public class ParcelaControle {
 					parcela.setStatusVencida("vencida");
 					parcelasFinais.add(parcela);
 					System.out.println("oi3");
-				}
+				}else
 				if(parcela.getDataPagamento() != null && parcela.getDataPagamento().isAfter(parcela.getDataVencimento())){
 					parcela.setStatusVencida("paga");
 					parcelasFinais.add(parcela);
 					System.out.println("oi4");
-				}
+				}else
 				if(parcela.getDataPagamento() == null && parcela.getDataVencimento().isAfter(hoje)){
 					parcela.setStatusVencida("A vencer");
 					parcelasFinais.add(parcela);
 					System.out.println("oi5");
-				}
+				}else
 				if(parcela.getDataPagamento() != null &&  parcela.getDataPagamento().isBefore(parcela.getDataVencimento())){
 					parcela.setStatusVencida("paga");
 					parcelasFinais.add(parcela);
@@ -204,11 +204,11 @@ public class ParcelaControle {
 				if(parcela.getDataPagamento() == null && parcela.getDataVencimento().isBefore(hoje)){
 					parcela.setStatusVencida("Em atraso");
 					parcelasFinais.add(parcela);
-				}
+				}else
 				if(parcela.getDataPagamento() != null && parcela.getDataPagamento().isBefore(parcela.getDataVencimento()) || parcela.getDataPagamento() != null && parcela.getDataPagamento().isEqual(parcela.getDataVencimento())){
 					parcela.setStatusVencida("paga");
 					parcelasFinais.add(parcela);
-				}
+				}else
 				if(parcela.getDataPagamento() != null && parcela.getDataPagamento().isAfter(parcela.getDataVencimento())){
 					parcela.setStatusVencida("Paga em atraso");
 					parcelasFinais.add(parcela);
@@ -236,11 +236,11 @@ public class ParcelaControle {
 				if(parcela.getDataPagamento() == null){
 					parcela.setStatusVencida("Em aberto");
 					parcelasFinais.add(parcela);
-				}
+				}else
 				if(parcela.getDataCredito() != null && parcela.getDataCredito().isBefore(hoje) || parcela.getDataCredito() != null &&  parcela.getDataCredito().equals(hoje)){
 					parcela.setStatusVencida("creditada");
 					parcelasFinais.add(parcela);
-				}
+				}else
 				if(parcela.getDataCredito() != null && parcela.getDataCredito().isAfter(hoje)){
 					parcela.setStatusVencida("A creditar");
 					parcelasFinais.add(parcela);
