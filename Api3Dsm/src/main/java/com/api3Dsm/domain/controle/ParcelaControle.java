@@ -181,7 +181,7 @@ public class ParcelaControle {
 					parcelasFinais.add(parcela);
 					System.out.println("oi3");
 				}else
-				if(parcela.getDataPagamento() != null && parcela.getDataPagamento().isAfter(parcela.getDataVencimento())){
+				if(parcela.getDataPagamento() != null && parcela.getDataPagamento().isAfter(parcela.getDataVencimento()) && parcela.getDataPagamento().isBefore(hoje) ||parcela.getDataPagamento() != null && parcela.getDataPagamento().isAfter(parcela.getDataVencimento()) && parcela.getDataPagamento().isEqual(hoje)){
 					parcela.setStatusVencida("paga");
 					parcelasFinais.add(parcela);
 					System.out.println("oi4");
@@ -191,10 +191,13 @@ public class ParcelaControle {
 					parcelasFinais.add(parcela);
 					System.out.println("oi5");
 				}else
-				if(parcela.getDataPagamento() != null &&  parcela.getDataPagamento().isBefore(parcela.getDataVencimento())){
+				if(parcela.getDataPagamento() != null &&  parcela.getDataPagamento().isBefore(parcela.getDataVencimento()) && parcela.getDataPagamento().isBefore(hoje) || parcela.getDataPagamento() != null &&  parcela.getDataPagamento().isBefore(parcela.getDataVencimento()) && parcela.getDataPagamento().isEqual(hoje)){
 					parcela.setStatusVencida("paga");
 					parcelasFinais.add(parcela);
 					System.out.println("oi6");
+				}else{
+					parcela.setStatusVencida("A vencer");
+					parcelasFinais.add(parcela);
 				}
 			}
 		}
