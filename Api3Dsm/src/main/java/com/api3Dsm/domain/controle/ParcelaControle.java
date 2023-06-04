@@ -212,7 +212,7 @@ public class ParcelaControle {
 					parcela.setStatusVencida("paga");
 					parcelasFinais.add(parcela);
 				}else
-				if(parcela.getDataPagamento() != null && parcela.getDataPagamento().isAfter(parcela.getDataVencimento())){
+				if(parcela.getDataPagamento() != null && parcela.getDataPagamento().isAfter(parcela.getDataVencimento()) && parcela.getDataPagamento().isBefore(hoje)){
 					parcela.setStatusVencida("Paga em atraso");
 					parcelasFinais.add(parcela);
 				}else{
