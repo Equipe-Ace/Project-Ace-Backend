@@ -130,7 +130,7 @@ public class ClienteControle {
 					}
 				}else{
 					if(parcela.getDataPagamento().isAfter(parcela.getDataVencimento())){
-						cliente.setAdimplencia("Inadimplente");
+						cliente.setAdimplencia("Adimplente");
 						break;
 					}else{
 						cliente.setAdimplencia("Adimplente");
