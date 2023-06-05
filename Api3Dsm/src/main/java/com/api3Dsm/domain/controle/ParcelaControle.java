@@ -208,11 +208,11 @@ public class ParcelaControle {
 					parcela.setStatusVencida("Em atraso");
 					parcelasFinais.add(parcela);
 				}else
-				if(parcela.getDataPagamento() != null && parcela.getDataPagamento().isBefore(parcela.getDataVencimento()) && parcela.getDataPagamento().isBefore(hoje)|| parcela.getDataPagamento() != null && parcela.getDataPagamento().isEqual(parcela.getDataVencimento()) && parcela.getDataPagamento().isBefore(hoje)){
+				if(parcela.getDataPagamento() != null && parcela.getDataPagamento().isBefore(parcela.getDataVencimento()) && parcela.getDataPagamento().isBefore(hoje)|| parcela.getDataPagamento() != null && parcela.getDataPagamento().isEqual(parcela.getDataVencimento()) && parcela.getDataPagamento().isEqual(hoje)){
 					parcela.setStatusVencida("paga");
 					parcelasFinais.add(parcela);
 				}else
-				if(parcela.getDataPagamento() != null && parcela.getDataPagamento().isAfter(parcela.getDataVencimento()) && parcela.getDataPagamento().isBefore(hoje)){
+				if(parcela.getDataPagamento() != null && parcela.getDataPagamento().isAfter(parcela.getDataVencimento()) && parcela.getDataPagamento().isBefore(hoje) || parcela.getDataPagamento() != null && parcela.getDataPagamento().isAfter(parcela.getDataVencimento()) && parcela.getDataPagamento().isEqual(hoje)){
 					parcela.setStatusVencida("Paga em atraso");
 					parcelasFinais.add(parcela);
 				}else{
